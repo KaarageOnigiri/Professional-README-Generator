@@ -13,49 +13,83 @@ const questions = [
     "What does this project do?",
     "What did you learn from doing this project?",
     "Provide a step-by-step instructions on how to install this program:",
+    "Please provide instructions and examples for use:",
+    "Please explain how others can contribute:",
+    "Explain to the users the test you conducted for this project:",
+    "Please choose your license:",
 ];
 
-// deconstruct 'questions' here for fun
+// deconstructed 'questions' here
+const [title, motivation, why, what, learn, install, usage, contribute, test, license] = questions;
 
 // TODO: Create a function to write README file
-function writeToFile(fileName, data) {}
+function writeToFile(fileName, data) {
+    // use fs here
+}
 
 // TODO: Create a function to initialize app
-function init(q) {
-    console.log(`Please write your answers in full sentence.`);
+function init() {
+    console.log(`Please write your answers in full sentences.`);
     inquirer.prompt([
         {
             type: 'input',
-            message: q[0],
-            name: 'projectName',
+            message: title,
+            name: 'title',
         },
         {
             type: 'input',
-            message: q[1],
+            message: motivation,
             name: 'motivation',
         },
         {
             type: 'input',
-            message: q[2],
+            message: why,
             name: 'why',
         },
         {
             type: 'input',
-            message: q[3],
-            name: 'function',
+            message: what,
+            name: 'what',
         },
         {
             type: 'input',
-            message: q[4],
+            message: learn,
             name: 'learn',
         },
         {
             type: 'input',
-            message: q[5],
-            name: 'installGuide',
+            message: install,
+            name: 'install',
+        },
+        {
+            type: 'input',
+            message: usage,
+            name: 'usage',
+        },
+        {
+            type: 'input',
+            message: contribute,
+            name: 'contribute',
+        },
+        {
+            type: 'input',
+            message: test,
+            name: 'test',
+        },
+        {
+            type: 'list',
+            message: license,
+            name: 'license',
+            choices: ['1', '2', '3'],
         }
     ])
+    .then((answers) => {
+        
+
+
+        // call the function writeToFile here
+    })
 }
 
 // Function call to initialize app
-init(questions);
+init();
