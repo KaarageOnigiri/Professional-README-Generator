@@ -2,53 +2,6 @@
 const inquirer = require('inquirer');
 const fs = require('fs');
 
-// global variable for storing user's answers
-var titleAnswer;
-var motivationAnswer;
-var whyAnswer;
-var whatAnswer;
-var learnAnswer;
-var installAnswer;
-var usageAnswer;
-var contributeAnswer;
-var testAnswer;
-var licenseAnswer;
-
-// An object containing HTML file:
-const readmePage = `# ${titleAnswer}
-
-## Description
-
-- Q: Motivation 
-- Q: Why did you build this project?
-- Q: What does it do?
-- Q: What did you learn?
-
-## Table of Contents
-
-* [Installation](#installation)
-* [Usage](#usage)
-* [License](#license)
-* [Contributing](#contributing)
-* [Tests](#tests)
-* [Questions](#questions)
-
-## Installation
-
-## Usage
-
-## License
-
-- Q: (USE LIST)
-
-## Contributing
-
-## Tests
-
-## Questions
-
-To reach me, click on my email link:`;
-
 // TODO: Create an array of questions for user input
 const questions = [
     "What would you like your project to be called?",
@@ -61,33 +14,98 @@ const questions = [
     "Please explain how others can contribute:",
     "Explain to the users the test you conducted for this project:",
     "Please choose your license:",
+    "Please enter your GitHub username:",
+    "Please type your email address for others to contact you for questions:"
 ];
 
 // deconstructed 'questions' here
-const [title, motivation, why, what, learn, install, usage, contribute, test, license] = questions;
+const [title, motivation, why, what, learn, install, usage, contribute, test, license, github, email] = questions;
+
+// I deleted the markdown.js and moved the functions here because I only found them out
+// after I was close to finishing the challenge
+
+// TODO: Create a function that returns a license badge based on which license is passed in
+// If there is no license, return an empty string
+function renderLicenseBadge(license) {
+    if(license !== null) {
+        return `![License](https://img.shields.io/badge/License-${license}-blue.svg)`
+    }
+    return ""
+}
+
+// TODO: Create a function that returns the license link
+// If there is no license, return an empty string
+function renderLicenseLink(license) {
+    if(license !== null) {
+        return "* [License](#license)"
+    }
+    return ""
+}
+
+// TODO: Create a function that returns the license section of README
+// If there is no license, return an empty string
+function renderLicenseSection(license) {
+    if(license !== null) {
+        return "## License"
+    }
+    return ""
+}
 
 // TODO: Create a function to write README file
 function writeToFile(fileName, data) {
-    // assign the data to the global variables
-    titleAnswer = data.title;
-    motivationAnswer = data.motivation;
-    whyAnswer = data.why;
-    whatAnswer = data.what;
-    learnAnswer = data.learn;
-    installAnswer = data.install;
-    usageAnswer = data.usage;
-    contributeAnswer = data.contribute;
-    testAnswer = data.test;
-    licenseAnswer = data.license;
     // use fs here
-    fs.writeFile(fileName, readmePage, (error, response) => {
-        error ? console.log(error, response) : console.log("README file in test folder created successfully")
+    fs.writeFile(fileName, `# ${data.title}
+
+${renderLicenseBadge(data.license)}
+
+## Description
+
+- ${data.motivation}.
+- ${data.why}.
+- ${data.what}.
+- ${data.learn}.
+
+## Table of Contents
+
+* [Installation](#installation)
+* [Usage](#usage)
+${renderLicenseLink(data.license)}
+* [Contributing](#contributing)
+* [Tests](#tests)
+* [Questions](#questions)
+
+## Installation
+
+${data.install}.
+
+## Usage
+
+${data.usage}.
+
+${renderLicenseSection(data.license)}
+
+${data.license}
+
+## Contributing
+
+${data.contribute}.
+
+## Tests
+
+${data.test}.
+
+## Questions
+
+GitHub Link: [${data.github}](https:www.github.com/${data.github})
+To reach me, click on my email link: [${data.email}](mailto:${data.email})`, (error, response) => {
+        error ? console.log(error, response) : 
+        console.log("\nREADME file in test folder created successfully")
     });
 }
 
 // TODO: Create a function to initialize app
 function init() {
-    console.log(`Please write your answers in full sentences.`);
+    console.log(`\nPlease write your answers in full sentences.\n`);
     inquirer.prompt([
         {
             type: 'input',
@@ -138,12 +156,22 @@ function init() {
             type: 'list',
             message: license,
             name: 'license',
-            choices: ['License: CC0-1.0', 'License: GPL v3', 'License: Hippocratic 2.1', 'License: IPL 1.0'],
+            choices: ['CC01.0', 'GPLv3', 'Hippocratic2.1', 'IPL1.0', 'MIT'],
+        },
+        {
+            type: 'github',
+            message: github,
+            name: 'github',
+        },
+        {
+            type: 'email',
+            message: email,
+            name: 'email',
         }
     ])
     .then((answers) => {
         // call the function writeToFile here
-        writeToFile('./test/README.md', answers);
+        writeToFile('./output/README.md', answers);
     })
     .catch(function(error, data){
         console.log(error, data);
