@@ -25,6 +25,9 @@ const [title, motivation, why, what, learn, install, usage, contribute, test, li
 // TODO: Create a function to write README file
 function writeToFile(fileName, data) {
     // use fs here
+    fs.writeFile(fileName, readmePage, (error, response) => {
+        error ? console.log(error, response) : console.log("README file in test folder created successfully")
+    });
 }
 
 // TODO: Create a function to initialize app
@@ -80,16 +83,17 @@ function init() {
             type: 'list',
             message: license,
             name: 'license',
-            choices: ['1', '2', '3'],
+            choices: ['License: CC0-1.0', 'License: GPL v3', 'License: Hippocratic 2.1', 'License: IPL 1.0'],
         }
     ])
     .then((answers) => {
-        
-
-
         // call the function writeToFile here
+        writeToFile('./test/README.md', answers);
     })
-}
+    .catch(function(error, data){
+        console.log(error, data);
+    });
+} 
 
 // Function call to initialize app
 init();
