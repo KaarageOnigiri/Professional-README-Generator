@@ -2,8 +2,52 @@
 const inquirer = require('inquirer');
 const fs = require('fs');
 
+// global variable for storing user's answers
+var titleAnswer;
+var motivationAnswer;
+var whyAnswer;
+var whatAnswer;
+var learnAnswer;
+var installAnswer;
+var usageAnswer;
+var contributeAnswer;
+var testAnswer;
+var licenseAnswer;
+
 // An object containing HTML file:
-const readmePage = ``;
+const readmePage = `# ${titleAnswer}
+
+## Description
+
+- Q: Motivation 
+- Q: Why did you build this project?
+- Q: What does it do?
+- Q: What did you learn?
+
+## Table of Contents
+
+* [Installation](#installation)
+* [Usage](#usage)
+* [License](#license)
+* [Contributing](#contributing)
+* [Tests](#tests)
+* [Questions](#questions)
+
+## Installation
+
+## Usage
+
+## License
+
+- Q: (USE LIST)
+
+## Contributing
+
+## Tests
+
+## Questions
+
+To reach me, click on my email link:`;
 
 // TODO: Create an array of questions for user input
 const questions = [
@@ -24,6 +68,17 @@ const [title, motivation, why, what, learn, install, usage, contribute, test, li
 
 // TODO: Create a function to write README file
 function writeToFile(fileName, data) {
+    // assign the data to the global variables
+    titleAnswer = data.title;
+    motivationAnswer = data.motivation;
+    whyAnswer = data.why;
+    whatAnswer = data.what;
+    learnAnswer = data.learn;
+    installAnswer = data.install;
+    usageAnswer = data.usage;
+    contributeAnswer = data.contribute;
+    testAnswer = data.test;
+    licenseAnswer = data.license;
     // use fs here
     fs.writeFile(fileName, readmePage, (error, response) => {
         error ? console.log(error, response) : console.log("README file in test folder created successfully")
