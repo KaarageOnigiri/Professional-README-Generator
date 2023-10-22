@@ -96,16 +96,16 @@ ${data.test}.
 
 ## Questions
 
-GitHub Link: [${data.github}](https:www.github.com/${data.github})
+GitHub Link: [${data.github}](https:www.github.com/${data.github})\n
 To reach me, click on my email link: [${data.email}](mailto:${data.email})`, (error, response) => {
         error ? console.log(error, response) : 
-        console.log("\nREADME file in test folder created successfully")
+        console.log("\nREADME file in output folder created successfully")
     });
 }
 
 // TODO: Create a function to initialize app
 function init() {
-    console.log(`\nPlease write your answers in full sentences.\n`);
+    console.log(`\nPlease type in your answers\n`);
     inquirer.prompt([
         {
             type: 'input',
